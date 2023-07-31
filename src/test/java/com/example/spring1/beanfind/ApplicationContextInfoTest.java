@@ -1,4 +1,4 @@
-package com.example.spring1.beenfind;
+package com.example.spring1.beanfind;
 
 import com.example.spring1.AppConfig;
 import org.junit.jupiter.api.DisplayName;
@@ -11,7 +11,7 @@ class ApplicationContextInfoTest {
     AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(AppConfig.class);
 
     @Test
-    @DisplayName("been scan")
+    @DisplayName("bean scan")
     void findAllBean() {
 
         String[] beanDefinitionNames = ac.getBeanDefinitionNames();
@@ -24,7 +24,7 @@ class ApplicationContextInfoTest {
     }
 
     @Test
-    @DisplayName("beenApk scan")
+    @DisplayName("beanApk scan")
     void findApplicationBean() {
 
         String[] beanDefinitionNames = ac.getBeanDefinitionNames();
