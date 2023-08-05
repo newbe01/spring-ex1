@@ -3,6 +3,9 @@ package com.example.spring1.lifecycle;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
 //public class NetworkClient implements InitializingBean, DisposableBean {
 public class NetworkClient {
 
@@ -28,12 +31,14 @@ public class NetworkClient {
         System.out.println("close : url = " + url);
     }
 
+    @PostConstruct
     public void init() {
         System.out.println("NetworkClient.afterPropertiesSet");
         connect();
         call("connect message");
     }
 
+    @PreDestroy
     public void close() {
         System.out.println("NetworkClient.destroy");
         disconnect();
