@@ -1,13 +1,14 @@
 package com.example.spring1.lifecycle;
 
-public class NetworkClient {
+import org.springframework.beans.factory.DisposableBean;
+import org.springframework.beans.factory.InitializingBean;
+
+public class NetworkClient implements InitializingBean, DisposableBean {
 
     private String url;
 
     public NetworkClient() {
         System.out.println("constructor : url = " + url);
-        connect();
-        call("connect message");
     }
 
     public void setUrl(String url) {
@@ -26,4 +27,16 @@ public class NetworkClient {
         System.out.println("close : url = " + url);
     }
 
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        System.out.println("NetworkClient.afterPropertiesSet");
+        connect();
+        call("connect message");
+    }
+
+    @Override
+    public void destroy() throws Exception {
+        System.out.println("NetworkClient.destroy");
+        disconnect();
+    }
 }
