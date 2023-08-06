@@ -28,6 +28,24 @@ public class SingletonWithPrototypeTest1 {
 
     }
 
+    @Test
+    void singletonClientUsePrototype() {
+
+        AnnotationConfigApplicationContext ac =
+                new AnnotationConfigApplicationContext(PrototypeBean.class, ClientBean.class);
+
+        ClientBean clientBean1 = ac.getBean(ClientBean.class);
+        int count1 = clientBean1.logic();
+
+        assertThat(count1).isEqualTo(1);
+
+        ClientBean clientBean2 = ac.getBean(ClientBean.class);
+        int count2 = clientBean2.logic();
+
+        assertThat(count2).isEqualTo(2);
+
+    }
+
     @Scope("prototype")
     static class PrototypeBean {
         private int count = 0;
@@ -51,4 +69,19 @@ public class SingletonWithPrototypeTest1 {
         }
     }
 
+    @Scope("singleton")
+    static class ClientBean {
+        private final PrototypeBean prototypeBean;
+
+        ClientBean(PrototypeBean prototypeBean) {
+            this.prototypeBean = prototypeBean;
+        }
+
+        public int logic() {
+            prototypeBean.addCount();
+            int count = prototypeBean.getCount();
+            return count;
+        }
+
+    }
 }
